@@ -1,0 +1,55 @@
+name: 'Test'
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+concurrency:
+  group: '${{ github.workflow }}-${{ github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: 'bash'
+
+jobs:
+  demo-claat-action:
+    permissions:
+      contents: write
+      id-token: write
+    runs-on: ubuntu-latest
+    env:
+      GA_ID: "UA-3295395-7"
+      GA_ID_V4: "G-E0H6JSF2N3"
+      HTML_PATH: codelabs
+      MD_PATH: codelabs-md
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Oauth2 token
+        id: "auth"
+        uses: "google-github-actions/auth@v2"
+        with:
+          token_format: "access_token"
+          access_token_scopes: "https://www.googleapis.com/auth/drive.readonly"
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_CREDS }}"
+
+      - name: claat (single document)
+        uses: "khammami/claat-action@main"
+        with:
+          auth: ${{ steps.auth.outputs.access_token }}
+          source: 1al07Cg0AUmvb4FXd35KCQT1VvdRU7cGlrEEMdKqgo1I
+          codelabs-path: test
+
+      - name: claat (codelabs.json)
+        uses: "khammami/claat-action@main"
+        with:
+          auth: ${{ steps.auth.outputs.access_token }}
+          source: 1al07Cg0AUmvb4FXd35KCQT1VvdRU7cGlrEEMdKqgo1I
+          codelabs-path: test
+          codelabs-json: assets/codelabs.json

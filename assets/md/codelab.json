@@ -1,0 +1,29 @@
+{
+  "environment": "web",
+  "format": "md",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-3295395-7",
+  "updated": "2024-02-19T15:56:46Z",
+  "id": "android-studio-et-hello-world",
+  "duration": 48,
+  "title": "TP 01.1: Android Studio et Hello World",
+  "authors": "Khalil Hammami",
+  "summary": "",
+  "source": "1CioiyTbft7RYICMD9L8rtvb2jKv7lNbTH3mtgqoxcGM",
+  "theme": "android",
+  "status": [
+    "hidden"
+  ],
+  "category": [
+    "android"
+  ],
+  "tags": [
+    "enetcomtppem",
+    "enetcomtppm",
+    "kiosk",
+    "web"
+  ],
+  "feedback": "https://github.com/khammami/codelabs-enetcom/issues",
+  "ga": "UA-3295395-7",
+  "url": "android-studio-et-hello-world"
+}
