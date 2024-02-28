@@ -1,10 +1,8 @@
 # CLaaT (Codelabs as a Thing) export
 
-## Description
-
 This composite action exports Google documents using [CLaaT](https://github.com/googlecodelabs/tools) as a codelab in HTML, Markdown, or offline format. It can also convert a Markdown file (.md) to a codelab in HTML.
 
-> [!NOTE]
+> [!TIP]
 >
 > To check `claat` CLI ,use the Go module installer to get the latest version of CLaaT with support for Google Analytics v4.
 
@@ -105,3 +103,7 @@ jobs:
   }
 ]
 ```
+
+>[!NOTE]
+>
+> This composite has been moved from [codelabs-enetcom-md](https://github.com/khammami/codelabs-enetcom-md/tree/main/actions/claat)
