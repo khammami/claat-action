@@ -48,9 +48,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Generate Oauth2 token
+        id: "auth"
+        uses: "google-github-actions/auth@v2"
+        with:
+          token_format: "access_token"
+          access_token_scopes: "https://www.googleapis.com/auth/drive.readonly"
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_CREDS }}"
     - name: Export codelab
       uses: "khammami/claat-action@[version|main]"
       with:
+        auth: ${{ steps.auth.outputs.access_token }}
         source: '1234567890abcdef'
         format: 'html'
 ```
@@ -61,16 +69,24 @@ This example exports multiple Google documents listed in a JSON file named `code
 name: Export multiple codelabs from JSON
 
 on:
-  push: {}
+  push:
 
 jobs:
   export:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Generate Oauth2 token
+        id: "auth"
+        uses: "google-github-actions/auth@v2"
+        with:
+          token_format: "access_token"
+          access_token_scopes: "https://www.googleapis.com/auth/drive.readonly"
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_CREDS }}"
     - name: Export codelabs
       uses: "khammami/claat-action@[version|main]"
       with:
+        auth: ${{ steps.auth.outputs.access_token }}
         codelabs-json: 'codelabs.json'
         format: 'all'
 ```
