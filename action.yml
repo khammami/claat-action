@@ -1,4 +1,4 @@
-name: "CLaaT (Codelabs as a Thing) export"
+name: "CLaaT export"
 
 description: |
   Convert Google Docs to codelabs (HTML, Markdown, offline) with CLaat. Includes converting Markdown files to HTML codelabs.
