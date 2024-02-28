@@ -14,7 +14,7 @@ To install `claat` on your machine:
 go install github.com/googlecodelabs/tools/claat@latest`
 ```
 
-To check available commands and flags of `claat`:
+To check available [commands and flags](docs/claat_command_help.md) of `claat`:
 
 ```bash
 claat help
@@ -41,7 +41,7 @@ This example showcases exporting a single Google document with ID `"1234567890ab
 name: Export codelab from Google Doc
 
 on:
-  push: {}
+  push:
 
 jobs:
   export:
@@ -49,7 +49,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Export codelab
-      uses: "khammami/codelabs-enetcom-md/actions/claat@v0"
+      uses: "khammami/claat-action@[version|main]"
       with:
         source: '1234567890abcdef'
         format: 'html'
@@ -69,7 +69,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Export codelabs
-      uses: "khammami/codelabs-enetcom-md/actions/claat@v0"
+      uses: "khammami/claat-action@[version|main]"
       with:
         codelabs-json: 'codelabs.json'
         format: 'all'
@@ -89,7 +89,3 @@ jobs:
   }
 ]
 ```
-
->[!NOTE]
->
-> Remember to replace the example Google document ID and JSON file path with your actual values. You can also adjust the `auth`, `codelabs-path`, `gaid`, and `ga4id` inputs as needed
