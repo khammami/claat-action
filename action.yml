@@ -123,9 +123,10 @@ runs:
         SOURCES: ${{ inputs.source }}
         JSON_FILE: ${{ inputs.codelabs-json }}
         OUTPOUT_PATH: ${{ inputs.codelabs-path }}
-      working-directory: ${{ contains(fromJSON('["update"]'), inputs.command) && inputs.codelabs-path || '.' }}
+      working-directory: ${{ contains(fromJSON('["update"]'), inputs.command) && inputs.codelabs-path || './' }}
       run: |
         echo "::group::Export codelab(s)"
+        echo "Current directory: $(pwd)"
         [[ -n "$OUTPOUT_PATH" ]] && mkdir -p "$OUTPOUT_PATH"
         if [[ "$JSON_FILE" != '' ]]; then
           SOURCES=$(jq -r '.[].source' $JSON_FILE )
