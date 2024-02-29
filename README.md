@@ -4,7 +4,7 @@ This composite action exports Google documents using [CLaaT](https://github.com/
 
 > [!TIP]
 >
-> To check `claat` CLI ,use the Go module installer to get the latest version of CLaaT with support for Google Analytics v4.
+> Use the Go module installer to get the latest version of CLaaT with support for Google Analytics v4.
 
 To install `claat` on your machine:
 
@@ -20,16 +20,16 @@ claat help
 
 ## Inputs
 
-| **Input** | **Description** | **Default** | **Required** |
-|---|---|---|---|
-| `claat-version` | CLaaT version | `latest` | No |
-| `source` | Accepted formats: Google doc ID or Markdown file (.md). Ignored if `codelabs-json` is set. | | **Yes** |
-| `auth` | Google OAuth2.0 token (required for Google docs, except for .md to HTML conversion). | `''` (empty string) | No |
-| `codelabs-path` | Path to save exported codelab(s). | `codelabs` | No |
-| `gaid` | Google Analytics ID | `UA-3295395-7` | No |
-| `ga4id` | Google Analytics v4 ID | `G-E0H6JSF2N3` | No |
-| `codelabs-json` | Path to a JSON file containing a list of Google document IDs. | `''` (empty string) | No |
-| `format` | Export format (html, md, or all). | `html` | No |
+| **Input** | **Description** | **Required** |
+|--|---|-|
+| `claat-version` | CLaaT version <br> Default (action): `latest` | No |
+| `source` | Accepted formats: Google doc ID or Markdown file (.md). Ignored if `codelabs-json` is set. <br> Default (action): `''` | **Yes** |
+| `auth` | Google OAuth2.0 token (required for Google docs, except for `.md` to HTML conversion). <br> Default (action): `''` | No |
+| `codelabs-path` | Path to save exported codelab(s). <br> Default (action): `''` <br> Default (claat): `.` | No |
+| `gaid` | Google Analytics ID <br> Default (action):`''` <br> Default (claat):`UA-49880327-14` | No |
+| `ga4id` | Google Analytics v4 ID <br> Default (action): `''` <br> Default (claat):`not implimented` | No |
+| `codelabs-json` | Path to a JSON file containing a list of Google document IDs. <br> Default (action): `''` | No |
+| `format` | Export format (html, md, offline or all). <br> Default (action): `html` <br> Default (claat): `html` | No |
 
 ## Example Usage
 
