@@ -131,15 +131,17 @@ runs:
         if [[ "$JSON_FILE" != '' ]]; then
           SOURCES=$(jq -r '.[].source' $JSON_FILE )
         fi
-        echo -e "exporting\n$SOURCES"
+        echo -e "${{ inputs.command }}...\n$SOURCES"
         IFS=$'\n'
         for source in $SOURCES; do
           command_default="${CLAAT_COMMAND}"
           [[ -n "$OUTPOUT_PATH" ]] && command_default+=" -o \"$OUTPOUT_PATH/\""
           command_default+=" $source"
+          echo -e "claat command:\n ${command_default}"
           if [[ "${{ inputs.format }}" == "all" ]]; then
             mkdir -p "${OUTPOUT_PATH:-md}"
             command_md="${CLAAT_COMMAND} -o \"${OUTPOUT_PATH:-md}/\" -f \"md\" $source"
+            echo -e "claat command(md):\n ${command_md}"
             eval "$command_default $@"
             eval "$command_md $@"
           else
