@@ -118,14 +118,16 @@ runs:
         OUTPOUT_PATH: ${{ inputs.codelabs-path }}
       run: |
         echo "::group::Export codelab(s)"
-        mkdir -p "$OUTPOUT_PATH"
+        [[ -n "$OUTPOUT_PATH" ]] && mkdir -p "$OUTPOUT_PATH"
         if [[ "$JSON_FILE" != '' ]]; then
           SOURCES=$(jq -r '.[].source' $JSON_FILE )
         fi
         echo -e "exporting\n$SOURCES"
         IFS=$'\n'
         for source in $SOURCES; do
-          command_default="${CLAAT_COMMAND} -o \"$OUTPOUT_PATH/\" $source"
+          command_default="${CLAAT_COMMAND}"
+          [[ -n "$OUTPOUT_PATH" ]] && command_default+=" -o \"$OUTPOUT_PATH/\""
+          command_default+=" $source"
           if [[ "${{ inputs.format }}" == "all" ]]; then
             mkdir -p "${OUTPOUT_PATH:-md}"
             command_md="${CLAAT_COMMAND} -o \"${OUTPOUT_PATH:-md}/\" -f \"md\" $source"
