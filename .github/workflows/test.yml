@@ -84,4 +84,4 @@ jobs:
         with:
           auth: ${{ steps.auth.outputs.access_token }} 
           command: 'update'
-          codelabs-path: ${{env.OUTPUT_PATH}} 
+          codelabs-path: assets
