@@ -40,14 +40,14 @@ jobs:
           credentials_json: "${{ secrets.SERVICE_ACCOUNT_CREDS }}"
 
       - name: claat (single document)
-        uses: "khammami/claat-action@main"
+        uses: ./
         with:
           auth: ${{ steps.auth.outputs.access_token }}
           source: 1al07Cg0AUmvb4FXd35KCQT1VvdRU7cGlrEEMdKqgo1I
           codelabs-path: test
 
       - name: claat (codelabs.json)
-        uses: "khammami/claat-action@main"
+        uses: ./
         with:
           auth: ${{ steps.auth.outputs.access_token }}
           source: 1al07Cg0AUmvb4FXd35KCQT1VvdRU7cGlrEEMdKqgo1I

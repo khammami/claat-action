@@ -31,15 +31,15 @@ inputs:
   gaid:
     description: |
       Google Analytics ID
-      Default is UA-3295395-7
+      Default is ''
     required: false
-    default: 'UA-3295395-7'
+    default: ''
   ga4id:
     description: |
       Google Analytics v4 ID
-      Default is G-E0H6JSF2N3
+      Default is ''
     required: false
-    default: 'G-E0H6JSF2N3'
+    default: ''
   codelabs-json:
     description: |
       The path to a JSON file containing a list of Google document IDs.
@@ -48,7 +48,7 @@ inputs:
     default: ''
   format:
     description: |
-      Choose export format (html, md or all).
+      Choose export format (html, md, offline or all).
       Default is html
     required: false
     default: 'html'
@@ -140,7 +140,7 @@ runs:
     # ga4id parser has been added to md parser but not yet in gdocs parser
     - name: Fix missing ga4id
       shell: bash
-      if: inputs.format != 'md'
+      if: ${{ contains(fromJSON('["html", "all"]'), inputs.format) && inputs.ga4id != '' }}
       working-directory: ${{ inputs.codelabs-path }}
       run: |
         echo "::group::Fix missing ga4id"
