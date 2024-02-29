@@ -74,3 +74,14 @@ jobs:
           source: ${{env.GDOC_ID}}  
           codelabs-path: ${{env.OUTPUT_PATH}}
           codelabs-json: ${{env.JSON_FILE}}
+
+      # update command without sources will scan current dir for codelab.json
+      # test exported codelabs from previous step
+      # codelabs-path used to change working directory (claat flags are ignored in update)
+      # check 'claat help'
+      - name: claat (codelabs.json - update)
+        uses: ./
+        with:
+          auth: ${{ steps.auth.outputs.access_token }} 
+          command: 'update'
+          codelabs-path: ${{env.OUTPUT_PATH}} 
