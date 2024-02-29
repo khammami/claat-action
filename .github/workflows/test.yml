@@ -24,10 +24,11 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     env:
+      GDOC_ID: 1al07Cg0AUmvb4FXd35KCQT1VvdRU7cGlrEEMdKqgo1I
       GA_ID: "UA-3295395-7"
       GA_ID_V4: "G-E0H6JSF2N3"
-      HTML_PATH: codelabs
-      MD_PATH: codelabs-md
+      OUTPUT_PATH: test
+      JSON_FILE: assets/codelabs.json
     steps:
       - uses: actions/checkout@v4
 
@@ -43,13 +44,33 @@ jobs:
         uses: ./
         with:
           auth: ${{ steps.auth.outputs.access_token }}
-          source: 1al07Cg0AUmvb4FXd35KCQT1VvdRU7cGlrEEMdKqgo1I
-          codelabs-path: test
+          source: ${{env.GDOC_ID}}
+          codelabs-path: ${{env.OUTPUT_PATH}}
+          gaid: ${{env.GA_ID}}
+          ga4id: ${{env.GA_ID_V4}}
+
+      - name: claat (single document - test min inputs - gdoc)
+        uses: ./
+        with:
+          auth: ${{ steps.auth.outputs.access_token }}
+          source: ${{env.GDOC_ID}}
+
+      - name: claat (single document - test min inputs - md)
+        uses: ./
+        with:
+          source: "assets/md/index.md"
+
+      - name: claat (single document - test min inputs - all)
+        uses: ./
+        with:
+          auth: ${{ steps.auth.outputs.access_token }}
+          source: ${{env.GDOC_ID}}
+          format: all
 
       - name: claat (codelabs.json)
         uses: ./
         with:
           auth: ${{ steps.auth.outputs.access_token }}
-          source: 1al07Cg0AUmvb4FXd35KCQT1VvdRU7cGlrEEMdKqgo1I
-          codelabs-path: test
-          codelabs-json: assets/codelabs.json
+          source: ${{env.GDOC_ID}}  
+          codelabs-path: ${{env.OUTPUT_PATH}}
+          codelabs-json: ${{env.JSON_FILE}}
