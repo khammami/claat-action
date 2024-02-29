@@ -1,5 +1,5 @@
 ---
-id: android-studio-et-hello-world
+id: android-studio-et-hello-world-md
 status: [hidden]
 authors: Khalil Hammami
 categories: android
