@@ -25,9 +25,9 @@ inputs:
   codelabs-path:
     description: |
       Exported codelab(s) will be saved to your chosen path.
-      Default is codelabs
+      Default is ''
     required: false
-    default: 'codelabs'
+    default: ''
   gaid:
     description: |
       Google Analytics ID
@@ -127,8 +127,8 @@ runs:
         for source in $SOURCES; do
           command_default="${CLAAT_COMMAND} -o \"$OUTPOUT_PATH/\" $source"
           if [[ "${{ inputs.format }}" == "all" ]]; then
-            mkdir -p "$OUTPOUT_PATH-md"
-            command_md="${CLAAT_COMMAND} -o \"$OUTPOUT_PATH-md/\" -f \"md\" $source"
+            mkdir -p "${OUTPOUT_PATH:-md}"
+            command_md="${CLAAT_COMMAND} -o \"${OUTPOUT_PATH:-md}/\" -f \"md\" $source"
             eval "$command_default $@"
             eval "$command_md $@"
           else
