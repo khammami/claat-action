@@ -10,6 +10,12 @@ inputs:
       Default is latest
     required: false
     default: 'latest'
+  command:
+    description: |
+      claat command. (export, update, serve)
+      Default is export
+    required: false
+    default: 'export'
   source:
     description: |
       Accepted File Formats: Google document ID Markdown file (.md)
@@ -101,9 +107,10 @@ runs:
         GAID: ${{ inputs.gaid }}
         AUTH: ${{ inputs.auth }}
         FORMAT: ${{ inputs.format }}
+        COMMAND: ${{ inputs.command }}
       run: |
         echo "::group::Build command"
-        claat_command="claat export"
+        claat_command="claat ${COMMAND}"
         [[ -n "$GAID" ]] && claat_command+=" -ga \"$GAID\""  
         [[ "$FORMAT" == "md" ]] && claat_command+=" -f \"$FORMAT\""
         [[ -n "$AUTH" ]] && claat_command+=" -auth \"$AUTH\""
