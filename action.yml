@@ -21,6 +21,7 @@ inputs:
       Accepted File Formats: Google document ID Markdown file (.md)
       If input \'codelabs-json\' is set, \'source\' will be ignored.
     required: true
+    default: ''
   auth:
     description: |
       A Google OAuth2.0 token is required to access Google documents.
