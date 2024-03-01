@@ -9,56 +9,56 @@ inputs:
       claat version.
       Default is latest
     required: false
-    default: 'latest'
+    default: "latest"
   command:
     description: |
       claat command. (export, update, serve)
       Default is export
     required: false
-    default: 'export'
+    default: "export"
   source:
     description: |
       Accepted File Formats: Google document ID Markdown file (.md)
       If input \'codelabs-json\' is set, \'source\' will be ignored.
     required: true
-    default: ''
+    default: ""
   auth:
     description: |
       A Google OAuth2.0 token is required to access Google documents.
       (Except when exporting .md files to HTML.)
       Default is ''
     required: false
-    default: ''
+    default: ""
   codelabs-path:
     description: |
       Exported codelab(s) will be saved to your chosen path.
       Default is ''
     required: false
-    default: ''
+    default: ""
   gaid:
     description: |
       Google Analytics ID
       Default is ''
     required: false
-    default: ''
+    default: ""
   ga4id:
     description: |
       Google Analytics v4 ID
       Default is ''
     required: false
-    default: ''
+    default: ""
   codelabs-json:
     description: |
       The path to a JSON file containing a list of Google document IDs.
       Default is ''
     required: false
-    default: ''
+    default: ""
   format:
     description: |
       Choose export format (html, md, offline or all).
       Default is html
     required: false
-    default: 'html'
+    default: "html"
 
 runs:
   using: "composite"
@@ -132,24 +132,20 @@ runs:
         if [[ "$JSON_FILE" != '' ]]; then
           SOURCES=$(jq -r '.[].source' $JSON_FILE )
         fi
-        echo -e "${{ inputs.command }}...\n$SOURCES"
+        echo -e "${{ inputs.command }}...\n"
+        echo -e "$SOURCES" | tr ' ' '\n'
+        base_command="${CLAAT_COMMAND}"
         if [[ "${{ inputs.command }}" == "export" ]]; then
-          IFS=$'\n'
-          for source in $SOURCES; do
-            command_default="${CLAAT_COMMAND}"
-            [[ -n "$OUTPOUT_PATH" ]] && command_default+=" -o \"$OUTPOUT_PATH/\""
-            command_default+=" $source"
-            echo -e "claat command:\n ${command_default}"
-            if [[ "${{ inputs.format }}" == "all" ]]; then
-              mkdir -p "${OUTPOUT_PATH:-md}"
-              command_md="${CLAAT_COMMAND} -o \"${OUTPOUT_PATH:-md}/\" -f \"md\" $source"
-              echo -e "claat command(md):\n ${command_md}"
-              eval "$command_default $@"
-              eval "$command_md $@"
-            else
-              eval "$command_default $@"
-            fi
-          done
+          [[ -n "$OUTPOUT_PATH" ]] && base_command+=" -o \"$OUTPOUT_PATH/\""
+          base_command+=" $SOURCES"
+          echo -e "claat command:\n ${base_command}"
+          if [[ "${{ inputs.format }}" == "all" ]]; then
+            mkdir -p "${OUTPOUT_PATH:-md}"
+            md_command="${CLAAT_COMMAND} -o \"${OUTPOUT_PATH:-md}/\" -f \"md\" $SOURCES"
+            echo -e "claat command(md):\n ${md_command}"
+          fi
+          eval "$base_command $@"
+          [[ "${inputs.format}" == "all" ]] && eval "$md_command $@"
         elif [[ "${{ inputs.command }}" == "update" ]]; then
           update_command="${CLAAT_COMMAND}"
           echo -e "claat command:\n ${update_command}"
