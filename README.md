@@ -31,7 +31,10 @@ claat help
 | `ga4id` | Google Analytics v4 ID <br> Default (action): `''` <br> Default (claat):`not implimented` | No |
 | `codelabs-json` | Path to a JSON file containing a list of Google document IDs. <br> Default (action): `''` | No |
 | `format` | Export format (html, md, offline or all). <br> Default (action): `html` <br> Default (claat): `html` | No |
-| `environment` | codelab environment <br> Default (action): `` <br> Default (claat):`web` | No |
+| `environment` | codelab environment <br> Default (action): `''` <br> Default (claat):`web` | No |
+| `prefix` | URL prefix for html format <br> Default (action): `''` <br> Default (claat):`https://storage.googleapis.com` | No |
+| `elements-path` | Local path (JS and CSS) of codelab elements. (in case Google prefix is broken) <br> Default (action): `elements/codelab-elements` | No |
+| `elements-default-path` | External path (JS and CSS) of codelab elements. (hosted by Google) <br> Default (action): `claat-public` | No |
 
 ## Example Usage
 

@@ -74,6 +74,16 @@ jobs:
           source: ${{env.GDOC_ID}}
           environment: kiosk
 
+      # elements-default-path will be replaced by elements-path in case you use -prefix
+      - name: claat (single document - test min inputs - prefix)
+        uses: ./
+        with:
+          auth: ${{ steps.auth.outputs.access_token }}
+          source: ${{env.GDOC_ID}}
+          prefix: https://codelabs-enetcom.khammami.tn/
+          elements-path: elements/codelab-elements
+          elements-default-path: claat-public
+
       - name: claat (codelabs.json)
         uses: ./
         with:
