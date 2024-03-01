@@ -83,6 +83,18 @@ inputs:
       Default is 'claat-public'
     required: false
     default: "claat-public"
+  extra:
+    description: |
+      Additional arguments to pass to format templates. JSON object of string,string key values.
+      Default is ''
+    required: false
+    default: ""
+  metadata:
+    description: |
+      Metadata fields to pass through to the output. Comma-delimited list of field names.
+      Default is ''
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -135,13 +147,17 @@ runs:
         ENVIRONMENT: ${{ inputs.environment }}
         COMMAND: ${{ inputs.command }}
         PREFIX: ${{ inputs.prefix }}
+        EXTRA: ${{ inputs.extra }}
+        METADATA: ${{ inputs.metadata }}
       run: |
         echo "::group::Build command"
         claat_command="claat ${COMMAND}"
         [[ -n "$ENVIRONMENT" ]] && claat_command+=" -e \"$ENVIRONMENT\""  
         [[ -n "$GAID" ]] && claat_command+=" -ga \"$GAID\""  
         [[ "$FORMAT" == "md" ]] && claat_command+=" -f \"$FORMAT\""
-        [[ -n "$PREFIX" ]] && claat_command+=" -prefix \"$PREFIX\""  
+        [[ -n "$PREFIX" ]] && claat_command+=" -prefix \"$PREFIX\""
+        [[ -n "$EXTRA" ]] && claat_command+=" -extra \"$EXTRA\"" 
+        [[ -n "$METADATA" ]] && claat_command+=" -pass_metadata \"$METADATA\""   
         [[ -n "$AUTH" ]] && claat_command+=" -auth \"$AUTH\""
         echo "CLAAT_COMMAND=$claat_command" >> $GITHUB_ENV 
         echo "::endgroup::"

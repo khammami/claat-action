@@ -35,6 +35,8 @@ claat help
 | `prefix` | URL prefix for html format <br> Default (action): `''` <br> Default (claat):`https://storage.googleapis.com` | No |
 | `elements-path` | Local path (JS and CSS) of codelab elements. (in case Google prefix is broken) <br> Default (action): `elements/codelab-elements` | No |
 | `elements-default-path` | External path (JS and CSS) of codelab elements. (hosted by Google) <br> Default (action): `claat-public` | No |
+| `extra` | Additional arguments to pass to format templates. JSON object of string,string key values. <br> Default (action): `''` | No |
+| `metadata` | Metadata fields to pass through to the output. Comma-delimited list of field names. <br> Default (action): `''` | No |
 
 ## Example Usage
 
