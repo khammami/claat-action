@@ -145,7 +145,7 @@ runs:
             echo -e "claat command(md):\n ${md_command}"
           fi
           eval "$base_command $@"
-          [[ "${inputs.format}" == "all" ]] && eval "$md_command $@"
+          [[ "${{ inputs.format }}" == "all" ]] && eval "$md_command $@"
         elif [[ "${{ inputs.command }}" == "update" ]]; then
           update_command="${CLAAT_COMMAND}"
           echo -e "claat command:\n ${update_command}"
