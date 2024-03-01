@@ -135,7 +135,7 @@ runs:
         echo "${{ inputs.command }}..."
         echo -e "$SOURCES" | tr ' ' '\n'
         base_command="${CLAAT_COMMAND}"
-        if [[ "${{ inputs.command }}" == "export" ]]; then
+        if [[ "${{ inputs.command }}" == "export" || "${{ inputs.command }}" == "update" ]]; then
           [[ -n "$OUTPOUT_PATH" ]] && base_command+=" -o \"$OUTPOUT_PATH/\""
           base_command+=" $SOURCES"
           echo -e "claat command:\n ${base_command}"
@@ -146,10 +146,6 @@ runs:
           fi
           eval "$base_command $@"
           [[ "${{ inputs.format }}" == "all" ]] && eval "$md_command $@"
-        elif [[ "${{ inputs.command }}" == "update" ]]; then
-          update_command="${CLAAT_COMMAND}"
-          echo -e "claat command:\n ${update_command}"
-          eval "$update_command $@"
         fi
         echo "::endgroup::"
 
