@@ -130,9 +130,9 @@ runs:
         echo "Current directory: $(pwd)"
         [[ -n "$OUTPOUT_PATH" ]] && mkdir -p "$OUTPOUT_PATH"
         if [[ "$JSON_FILE" != '' ]]; then
-          SOURCES=$(jq -r '.[].source' $JSON_FILE )
+          SOURCES=$(jq -r '.[].source' $JSON_FILE | tr '\n' ' ')
         fi
-        echo -e "${{ inputs.command }}...\n"
+        echo "${{ inputs.command }}..."
         echo -e "$SOURCES" | tr ' ' '\n'
         base_command="${CLAAT_COMMAND}"
         if [[ "${{ inputs.command }}" == "export" ]]; then
