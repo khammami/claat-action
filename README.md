@@ -23,6 +23,7 @@ claat help
 | **Input** | **Description** | **Required** |
 |--|---|-|
 | `claat-version` | CLaaT version <br> Default (action): `latest` | No |
+| `command` | CLaaT command <br> Default (action): `export` | No |
 | `source` | Accepted formats: Google doc ID or Markdown file (.md). Ignored if `codelabs-json` is set. <br> Default (action): `''` | **Yes** |
 | `auth` | Google OAuth2.0 token (required for Google docs, except for `.md` to HTML conversion). <br> Default (action): `''` | No |
 | `codelabs-path` | Path to save exported codelab(s). <br> Default (action): `''` <br> Default (claat): `.` | No |
@@ -30,6 +31,7 @@ claat help
 | `ga4id` | Google Analytics v4 ID <br> Default (action): `''` <br> Default (claat):`not implimented` | No |
 | `codelabs-json` | Path to a JSON file containing a list of Google document IDs. <br> Default (action): `''` | No |
 | `format` | Export format (html, md, offline or all). <br> Default (action): `html` <br> Default (claat): `html` | No |
+| `environment` | codelab environment <br> Default (action): `` <br> Default (claat):`web` | No |
 
 ## Example Usage
 
