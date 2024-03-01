@@ -59,6 +59,12 @@ inputs:
       Default is html
     required: false
     default: "html"
+  environment:
+    description: |
+      codelab environment.
+      Default is ''
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -108,10 +114,12 @@ runs:
         GAID: ${{ inputs.gaid }}
         AUTH: ${{ inputs.auth }}
         FORMAT: ${{ inputs.format }}
+        ENVIRONMENT: ${{ inputs.environment }}
         COMMAND: ${{ inputs.command }}
       run: |
         echo "::group::Build command"
         claat_command="claat ${COMMAND}"
+        [[ -n "$ENVIRONMENT" ]] && claat_command+=" -e \"$ENVIRONMENT\""  
         [[ -n "$GAID" ]] && claat_command+=" -ga \"$GAID\""  
         [[ "$FORMAT" == "md" ]] && claat_command+=" -f \"$FORMAT\""
         [[ -n "$AUTH" ]] && claat_command+=" -auth \"$AUTH\""

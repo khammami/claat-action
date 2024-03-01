@@ -67,6 +67,13 @@ jobs:
           source: ${{env.GDOC_ID}}
           format: all
 
+      - name: claat (single document - test min inputs - environment)
+        uses: ./
+        with:
+          auth: ${{ steps.auth.outputs.access_token }}
+          source: ${{env.GDOC_ID}}
+          environment: kiosk
+
       - name: claat (codelabs.json)
         uses: ./
         with:
