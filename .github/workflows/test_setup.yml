@@ -21,6 +21,8 @@ jobs:
   demo-claat-setup:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      
       - name: claat setup (latest)
         uses: ./setup
 
