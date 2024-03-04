@@ -1,7 +1,7 @@
-name: "CLaaT export"
+name: "CLaaT setup"
 
 description: |
-  Convert Google Docs to codelabs (HTML, Markdown, offline) with CLaat. Includes converting Markdown files to HTML codelabs.
+  Setup CLaat CLI (Go module).
 
 inputs:
   claat-version:
