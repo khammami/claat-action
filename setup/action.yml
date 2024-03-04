@@ -1,0 +1,59 @@
+name: "CLaaT export"
+
+description: |
+  Convert Google Docs to codelabs (HTML, Markdown, offline) with CLaat. Includes converting Markdown files to HTML codelabs.
+
+inputs:
+  claat-version:
+    description: |
+      claat version.
+      Default is latest
+    required: false
+    default: "latest"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check Runner OS
+      if: ${{ runner.os != 'Linux' }}
+      shell: bash
+      run: |
+        echo "::error title=⛔ error hint::Support Linux Only"
+        exit 1
+
+    - name: Setup Go v1.16 (compatible with claat)
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.16'
+
+    - name: Export Go bin to all steps
+      id: go-env
+      shell: bash
+      run: |
+        echo "::group::Export Go bin to all steps"
+        go version
+        echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+        echo "go-bin-path=$(go env GOPATH)/bin" >> "$GITHUB_OUTPUT"
+        echo "go bin exported."
+        echo "::endgroup::"
+
+    # Save/Restore claat
+    - name: claat cache
+      uses: actions/cache@v4
+      id: claat-cache
+      with:
+        path: |
+          ${{ steps.go-env.outputs.go-bin-path }}/*
+        key: go-claat-${{ inputs.claat-version }}
+
+    - name: Setup claat (latest)
+      if: steps.claat-cache.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        VERSION: ${{ inputs.claat-version }}
+      run: |
+        echo "::group::Setup claat (latest)"
+        mkdir -p $(go env GOPATH)/bin
+        go install github.com/googlecodelabs/tools/claat@$VERSION
+        claat version
+        echo "::endgroup::"
