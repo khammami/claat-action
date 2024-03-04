@@ -21,10 +21,10 @@ runs:
         echo "::error title=⛔ error hint::Support Linux Only"
         exit 1
 
-    - name: Setup Go v1.16 (compatible with claat)
+    - name: Setup Go v1.18 (compatible with claat)
       uses: actions/setup-go@v5
       with:
-        go-version: "1.16"
+        go-version: "1.18"
 
     - name: Export Go bin to all steps
       id: go-env
