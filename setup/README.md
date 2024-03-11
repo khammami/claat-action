@@ -16,13 +16,11 @@ claat help
 
 ## Inputs
 
-| **Input**               | **Description** | **Required** |
-|-------------------------|-----------------|-|
-| `version`         | CLaaT version <br> Default (action): `latest` | No |
+| **Input**     | **Description**                               | **Required** |
+|---------------|-----------------------------------------------|--------------|
+| `version`     | CLaaT version <br> Default (action): `latest` | No           |
 
 ## Example Usage
-
-This example showcases exporting a single Google document with ID `"1234567890abcdef"` to HTML format:
 
 ```yaml
 name: Workflow Sample
