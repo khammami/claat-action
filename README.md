@@ -18,11 +18,14 @@ To check available [commands and flags](docs/claat_command_help.md) of `claat`:
 claat help
 ```
 
+## V1
+
+This action has become simply a wrapper for the `claat` command. You need to set it up before using it. You can refer to the setup instructions in [the setup action](setup/README.md)
+
 ## Inputs
 
 | **Input**               | **Description** | **Required** |
 |-------------------------|-----------------|-|
-| `claat-version`         | CLaaT version <br> Default (action): `latest` | No |
 | `command`               | CLaaT command <br> Default (action): `export` | No |
 | `source`                | Accepted formats: Google doc ID or Markdown file (.md). Ignored if `codelabs-json` is set. <br> Default (action): `''` | **Yes** |
 | `auth`                  | Google OAuth2.0 token (required for Google docs, except for `.md` to HTML conversion). <br> Default (action): `''` | No |

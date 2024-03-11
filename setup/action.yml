@@ -26,7 +26,7 @@ runs:
       working-directory: setup
       continue-on-error: true
       run: |
-        wget https://raw.githubusercontent.com/googlecodelabs/tools/873fe39d02dcbd43005a5c44f6310595d6d9aa3e/claat/go.sum
+        wget https://raw.githubusercontent.com/googlecodelabs/tools/main/claat/go.sum
 
     - name: Setup Go v1.18 (compatible with claat)
       uses: actions/setup-go@v5
