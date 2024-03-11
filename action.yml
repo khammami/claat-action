@@ -111,51 +111,53 @@ runs:
     - name: Command builder
       shell: bash
       env:
-        GAID: ${{ inputs.gaid }}
-        AUTH: ${{ inputs.auth }}
-        FORMAT: ${{ inputs.format }}
-        ENVIRONMENT: ${{ inputs.environment }}
-        COMMAND: ${{ inputs.command }}
-        PREFIX: ${{ inputs.prefix }}
-        EXTRA: ${{ inputs.extra }}
-        METADATA: ${{ inputs.metadata }}
+        CL_GHA_GAID: ${{ inputs.gaid }}
+        CL_GHA_AUTH: ${{ inputs.auth }}
+        CL_GHA_FORMAT: ${{ inputs.format }}
+        CL_GHA_ENVIRONMENT: ${{ inputs.environment }}
+        CL_GHA_COMMAND: ${{ inputs.command }}
+        CL_GHA_PREFIX: ${{ inputs.prefix }}
+        CL_GHA_EXTRA: ${{ inputs.extra }}
+        CL_GHA_METADATA: ${{ inputs.metadata }}
       run: |
         echo "::group::Build command"
-        claat_command="claat ${COMMAND}"
-        [[ -n "$ENVIRONMENT" ]] && claat_command+=" -e \"$ENVIRONMENT\""  
-        [[ -n "$GAID" ]] && claat_command+=" -ga \"$GAID\""  
-        [[ "$FORMAT" == "md" ]] && claat_command+=" -f \"$FORMAT\""
-        [[ -n "$PREFIX" ]] && claat_command+=" -prefix \"$PREFIX\""
-        [[ -n "$EXTRA" ]] && claat_command+=" -extra \"$EXTRA\"" 
-        [[ -n "$METADATA" ]] && claat_command+=" -pass_metadata \"$METADATA\""   
-        [[ -n "$AUTH" ]] && claat_command+=" -auth \"$AUTH\""
+        claat_command="claat ${CL_GHA_COMMAND}"
+        [[ -n "$CL_GHA_ENVIRONMENT" ]] && claat_command+=" -e \"$CL_GHA_ENVIRONMENT\""  
+        [[ -n "$CL_GHA_GAID" ]] && claat_command+=" -ga \"$CL_GHA_GAID\""  
+        [[ "$CL_GHA_FORMAT" == "md" ]] && claat_command+=" -f \"$CL_GHA_FORMAT\""
+        [[ -n "$CL_GHA_PREFIX" ]] && claat_command+=" -prefix \"$CL_GHA_PREFIX\""
+        [[ -n "$CL_GHA_EXTRA" ]] && claat_command+=" -extra \"$CL_GHA_EXTRA\"" 
+        [[ -n "$CL_GHA_METADATA" ]] && claat_command+=" -pass_metadata \"$CL_GHA_METADATA\""   
+        [[ -n "$CL_GHA_AUTH" ]] && claat_command+=" -auth \"$CL_GHA_AUTH\""
         echo "CLAAT_COMMAND=$claat_command" >> $GITHUB_ENV 
         echo "::endgroup::"
 
     - name: Export codelab(s)
       shell: bash
       env:
-        SOURCES: ${{ inputs.source }}
-        JSON_FILE: ${{ inputs.codelabs-json }}
-        OUTPOUT_PATH: ${{ inputs.codelabs-path }}
+        CL_GHA_SOURCES: ${{ inputs.source }}
+        CL_GHA_JSON_FILE: ${{ inputs.codelabs-json }}
+        CL_GHA_OUTPUT_PATH: ${{ inputs.codelabs-path }}
       working-directory: ${{ contains(fromJSON('["update"]'), inputs.command) && inputs.codelabs-path || './' }}
       run: |
         echo "::group::Export codelab(s)"
         echo "Current directory: $(pwd)"
-        [[ -n "$OUTPOUT_PATH" ]] && mkdir -p "$OUTPOUT_PATH"
-        if [[ "$JSON_FILE" != '' ]]; then
-          SOURCES=$(jq -r '.[].source' $JSON_FILE | tr '\n' ' ')
+        [[ -n "$CL_GHA_OUTPUT_PATH" ]] && mkdir -p "$CL_GHA_OUTPUT_PATH"
+        if [[ "$CL_GHA_JSON_FILE" != '' ]]; then
+          CL_GHA_SOURCES=$(jq -r '.[].source' $CL_GHA_JSON_FILE | tr '\n' ' ')
         fi
         echo "${{ inputs.command }}..."
-        echo -e "$SOURCES" | tr ' ' '\n'
+        echo -e "$CL_GHA_SOURCES" | tr ' ' '\n'
         base_command="${CLAAT_COMMAND}"
         if [[ "${{ inputs.command }}" == "export" || "${{ inputs.command }}" == "update" ]]; then
-          [[ -n "$OUTPOUT_PATH" ]] && base_command+=" -o \"$OUTPOUT_PATH/\""
-          base_command+=" $SOURCES"
+          [[ -n "$CL_GHA_OUTPUT_PATH" ]] && base_command+=" -o \"$CL_GHA_OUTPUT_PATH/\""
+          base_command+=" $CL_GHA_SOURCES"
           echo -e "claat command:\n ${base_command}"
           if [[ "${{ inputs.format }}" == "all" ]]; then
-            mkdir -p "${OUTPOUT_PATH:-md}"
-            md_command="${CLAAT_COMMAND} -o \"${OUTPOUT_PATH:-md}/\" -f \"md\" $SOURCES"
+            dir_name_md=${CL_GHA_OUTPUT_PATH:+${CL_GHA_OUTPUT_PATH}-md}
+            dir_name_md=${dir_name_md:-md}
+            mkdir -p "$dir_name_md"
+            md_command="${CLAAT_COMMAND} -o \"${dir_name_md}/\" -f \"md\" $CL_GHA_SOURCES"
             echo -e "claat command(md):\n ${md_command}"
           fi
           eval "$base_command $@"
@@ -181,12 +183,12 @@ runs:
       if: ${{ contains(fromJSON('["html", "all"]'), inputs.format) && inputs.prefix != '' &&  inputs.elements-path != '' && inputs.elements-default-path != ''}}
       working-directory: ${{ inputs.codelabs-path }}
       env:
-        EXTERNAL_PATH: ${{ inputs.elements-default-path }}
-        LOCAL_PATH: ${{ inputs.elements-path }}
+        CL_GHA_EXTERNAL_PATH: ${{ inputs.elements-default-path }}
+        CL_GHA_LOCAL_PATH: ${{ inputs.elements-path }}
       run: |
         echo "::group::Fix elements local path"
         find . -type f -name "index.html" -print0 | while IFS= read -r -d '' file; do
-          sed -i "s/${EXTERNAL_PATH//\//\\\/}/${LOCAL_PATH//\//\\\/}/g" "$file"
+          sed -i "s/${CL_GHA_EXTERNAL_PATH//\//\\\/}/${CL_GHA_LOCAL_PATH//\//\\\/}/g" "$file"
         done
         echo "The default local path of codelab elements in html format has been replaced."
         echo "::endgroup::"
