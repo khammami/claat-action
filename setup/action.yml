@@ -25,6 +25,8 @@ runs:
       uses: actions/setup-go@v5
       with:
         go-version: "1.18"
+        cache-dependency-path: |
+          ~/go/pkg/mod/github.com/googlecodelabs/**.sum
 
     - name: Export Go bin to all steps
       id: go-env
@@ -33,21 +35,11 @@ runs:
         echo "::group::Export Go bin to all steps"
         go version
         echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
-        echo "go-bin-path=$(go env GOPATH)/bin" >> "$GITHUB_OUTPUT"
         echo "go bin exported."
         echo "::endgroup::"
 
-    # Save/Restore claat
-    - name: claat cache
-      uses: actions/cache@v4
-      id: claat-cache
-      with:
-        path: |
-          ${{ steps.go-env.outputs.go-bin-path }}/*
-        key: go-claat-${{ inputs.claat-version }}
 
     - name: Setup claat (latest)
-      if: steps.claat-cache.outputs.cache-hit != 'true'
       shell: bash
       env:
         VERSION: ${{ inputs.claat-version }}
