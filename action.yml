@@ -154,8 +154,8 @@ runs:
           base_command+=" $SOURCES"
           echo -e "claat command:\n ${base_command}"
           if [[ "${{ inputs.format }}" == "all" ]]; then
-            mkdir -p "${OUTPOUT_PATH:-md}"
-            md_command="${CLAAT_COMMAND} -o \"${OUTPOUT_PATH:-md}/\" -f \"md\" $SOURCES"
+            mkdir -p "${OUTPUT_PATH:+$OUTPUT_PATH-md}"
+            md_command="${CLAAT_COMMAND} -o \"${OUTPUT_PATH:+$OUTPUT_PATH-md}/\" -f \"md\" $SOURCES"
             echo -e "claat command(md):\n ${md_command}"
           fi
           eval "$base_command $@"
