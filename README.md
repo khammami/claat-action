@@ -111,6 +111,14 @@ jobs:
 ]
 ```
 
+## License
+
+The scripts and documentation in this project are released under the [Apache 2.0 License](LICENSE)
+
+## Code of Conduct
+
+:wave: Be nice. See [our code of conduct](.github/CODE_OF_CONDUCT.md)
+
 >[!NOTE]
 >
 > This composite has been moved from [codelabs-enetcom-md](https://github.com/khammami/codelabs-enetcom-md/tree/main/actions/claat)
