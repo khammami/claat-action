@@ -23,7 +23,7 @@ runs:
 
     - name: Get go.sum from claat repo
       shell: bash
-      working-directory: setup
+      working-directory: ${{github.action_path}}
       continue-on-error: true
       run: |
         wget https://raw.githubusercontent.com/googlecodelabs/tools/main/claat/go.sum
@@ -32,7 +32,7 @@ runs:
       uses: actions/setup-go@v5
       with:
         go-version: "1.18"
-        cache-dependency-path: setup/go.sum
+        cache-dependency-path: ${{github.action_path}}/go.sum
 
     - name: Export Go bin to all steps
       id: go-env
