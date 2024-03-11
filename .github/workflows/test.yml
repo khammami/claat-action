@@ -32,6 +32,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: claat setup (latest)
+        uses: ./setup
+
       - name: Generate Oauth2 token
         id: "auth"
         uses: "google-github-actions/auth@v2"

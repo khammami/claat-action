@@ -103,7 +103,7 @@ runs:
     - name: Check claat command
       shell: bash
       run: |
-        echo "::group::Export Go bin to all steps"
+        echo "::group::Check claat command"
         claat version >/dev/null 2>&1 || (echo "::error title=⛔ error hint::The command 'claat' is not installed." && exit 1)
         echo "claat is installed."
         echo "::endgroup::"
