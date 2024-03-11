@@ -1,0 +1,33 @@
+name: "Test Setup"
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.head_ref || github.ref }}"
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: "bash"
+
+jobs:
+  demo-claat-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: claat setup (latest)
+        uses: ./setup
+
+      - name: check claat version
+        run: claat version
+
+      - name: check claat help
+        run: claat help
