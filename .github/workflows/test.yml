@@ -70,6 +70,14 @@ jobs:
           source: ${{env.GDOC_ID}}
           format: all
 
+      - name: claat (single document - test min inputs - all - path)
+        uses: ./
+        with:
+          auth: ${{ steps.auth.outputs.access_token }}
+          source: ${{env.GDOC_ID}}
+          format: all
+          codelabs-path: ${{env.OUTPUT_PATH}}
+
       - name: claat (single document - test min inputs - environment)
         uses: ./
         with:
